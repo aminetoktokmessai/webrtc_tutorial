@@ -359,10 +359,10 @@ class Signaling {
           // Retry for 30 seconds
           stopTime = DateTime.now().add(Duration(seconds: 30));
           // Continue after connectivity is established
-          await waitForConnectivity();
           while (peerConnection!.connectionState !=
                   RTCPeerConnectionState.RTCPeerConnectionStateConnected &&
               DateTime.now().isBefore(stopTime)) {
+            await waitForConnectivity();
             print("reCalling");
             await reCreateRoom(remoteRenderer!);
             await Future.delayed(Duration(seconds: getRandomNumber(10, 15)));
@@ -375,10 +375,11 @@ class Signaling {
           // Retry for 30 seconds
           stopTime = DateTime.now().add(Duration(seconds: 30));
           // Continue after connectivity is established
-          await waitForConnectivity();
           while (peerConnection!.connectionState !=
                   RTCPeerConnectionState.RTCPeerConnectionStateConnected &&
               DateTime.now().isBefore(stopTime)) {
+            await waitForConnectivity();
+            print("reCalling");
             await joinRoom(roomId!, initialRemoteRenderer!);
             await Future.delayed(Duration(seconds: getRandomNumber(5, 10)));
             /*if (peerConnection!.connectionState ==
